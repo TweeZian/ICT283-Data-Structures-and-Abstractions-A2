@@ -1,0 +1,17 @@
+All files have been scanned for malware, before and after zipped.
+
+Name: Thien Twee Zian
+Student Number: 34664971
+
+Working
+
+All menu options work with both test data and given data.
+Doxygen output all successful, included in html folder.
+Inclusion of bonus menu option 5, tested working.
+Error message prompt for duplicate data can be found in Bst.h, commented out to prevent cluttering terminal.
+Error message prompt for invalid data read (dirty data) can be found in WindDataStore.cpp, under the various Store functions in the catch portion of try/catch, commented out to prevent cluttering terminal.
+
+
+Not Working
+
+

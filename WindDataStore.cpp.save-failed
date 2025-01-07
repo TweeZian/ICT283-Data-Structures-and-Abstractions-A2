@@ -1,0 +1,489 @@
+#include "WindDataStore.h"
+
+WindDataStore::WindDataStore() {}
+
+int WindDataStore::Size()
+{
+    itrMap it = m_bstMap.begin();
+    int counter;
+    while(it != m_bstMap.end())
+    {
+        wdBst tree;
+        tree = it->second;
+        counter += tree.TreeNodeCount();
+        ++it;
+    }
+    return counter;
+}
+
+void WindDataStore::GetBst(wdBst &wd, itrMap it)
+{
+    wd = it->second;
+}
+
+void WindDataStore::GetMap(bstMap &othermap)
+{
+    othermap = m_bstMap;
+}
+
+bool WindDataStore::ReadInputFileToStorage(const string &fileName)
+{
+    ifstream infile(fileName);
+    if( !infile ) return false;
+
+    string line;
+    getline(infile,line); // get header column names
+    SetHeaderNames(line);
+    while(getline(infile,line))
+    {
+        WindData wd;
+        istringstream iss(line); // initialize row into stream format to be used for processing data into individual columns
+        string ssline;
+        int currentColumn = 0; // first column starts at 0
+
+        while(getline(iss,ssline,','))
+        {
+            // runs through every storage column, when matching column found, store data into right storage
+            StoreDateAndTime(wd,ssline,currentColumn);
+            StoreAirTemp(wd,ssline,currentColumn);
+            StoreSpeed(wd,ssline,currentColumn);
+            StoreSolarRad(wd,ssline,currentColumn);
+
+            currentColumn++;
+        }
+        StoreIntoMap(wd);
+
+    }
+    infile.close();
+    return true;
+}
+
+void WindDataStore::StoreIntoMap(WindData wd)
+{
+    Date d;
+    wd.GetDate(d);
+    //use iterator to check if key exist in map
+    itrMap it = m_bstMap.find(d.GetMonthString()+to_string(d.GetYear()));
+
+    //if key exist, extract wdBst, insert, and reinsert back into map
+    if(it != m_bstMap.end())
+    {
+        wdBst tree;
+        tree = it->second;
+        tree.Insert(wd);
+        m_bstMap[d.GetMonthString()+to_string(d.GetYear())] = tree;
+    }
+    //else, create new map allocation
+    else
+    {
+        wdBst tree;
+        tree.Insert(wd);
+        m_bstMap[d.GetMonthString()+to_string(d.GetYear())] = tree;
+    }
+
+}
+
+void WindDataStore::SetHeaderNames(string &line)
+{
+    istringstream iss(line);
+    while(getline(iss,line,','))
+    {
+        m_headerNames.push_back(line);
+    }
+}
+
+void WindDataStore::StoreDateAndTime(WindData &wd, string &line, int currentColumn)
+{
+    string name = m_headerNames.at(currentColumn);
+
+    if(name.compare("WAST") == 0)
+    {
+        Date d;
+        Time t;
+        istringstream iss(line);
+        iss >> d >> t;
+        wd.SetDate(d);
+        wd.SetTime(t);
+    }
+}
+
+void WindDataStore::StoreAirTemp(WindData &wd, string &line, int currentColumn)
+{
+    string name = m_headerNames.at(currentColumn);
+    if(name.compare("T") == 0)
+    {
+        wd.SetAirTemp(stof(line));
+    }
+}
+
+void WindDataStore::StoreSpeed(WindData &wd, string &line, int currentColumn)
+{
+    string name = m_headerNames.at(currentColumn);
+    if(name.compare("S") == 0)
+    {
+        wd.SetSpeed(stof(line));
+    }
+}
+
+void WindDataStore::StoreSolarRad(WindData &wd, string &line, int currentColumn)
+{
+    string name = m_headerNames.at(currentColumn);
+    if(name.compare("SR") == 0)
+    {
+        wd.SetSolarRad(stoi(line));
+    }
+}
+
+float WindDataStore::CalculateWindSpeedMean(int month, int year)
+{
+    float sum;
+    string key = MONTH_STRING[month]+to_string(year);
+    if(m_bstMap.find(key) != m_bstMap.end())
+    {
+        wdBst tree = m_bstMap.at(key);
+        tree.InorderTraversal(GetWindSpeedSum,sum);
+
+        float mean = sum / (float)tree.TreeNodeCount();
+
+        if(mean == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return mean;
+        }
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+void WindDataStore::GetWindSpeedSum(WindData& wd, float& sum)
+{
+    sum += wd.GetSpeed();
+}
+
+float WindDataStore::CalculateWindSpeedSD(int month, int year)
+{
+    string key = MONTH_STRING[month]+to_string(year);
+    vector<float> wsv;
+    if(m_bstMap.find(key) != m_bstMap.end())
+    {
+        wdBst tree = m_bstMap.at(key);
+        tree.InorderTraversal(GetWindSpeedVector,wsv);
+
+        float sd;
+        float mean = CalculateWindSpeedMean(month,year);
+        for(float speed : wsv)
+        {
+            sd += (speed - mean)*(speed - mean);
+        }
+
+        sd = sd / wsv.size();
+        sd = sqrt(sd);
+
+        if(sd == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return sd;
+        }
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning sd = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+void WindDataStore::GetWindSpeedVector(WindData& wd, vector<float>& wsv)
+{
+    wsv.push_back(wd.GetSpeed());
+}
+
+float WindDataStore::CalculateAirTempMean(int month, int year)
+{
+    float sum;
+    string key = MONTH_STRING[month]+to_string(year);
+    if(m_bstMap.find(key) != m_bstMap.end())
+    {
+        wdBst tree = m_bstMap.at(key);
+        tree.InorderTraversal(GetAirTempSum,sum);
+
+        float mean = sum / (float)tree.TreeNodeCount();
+
+        if(mean == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return mean;
+        }
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+void WindDataStore::GetAirTempSum(WindData& wd, float& sum)
+{
+    sum += wd.GetAirTemp();
+}
+
+float WindDataStore::CalculateAirTempSD(int month, int year)
+{
+    string key = MONTH_STRING[month]+to_string(year);
+    vector<float> wsv;
+    if(m_bstMap.find(key) != m_bstMap.end())
+    {
+        wdBst tree = m_bstMap.at(key);
+        tree.InorderTraversal(GetAirTempVector,wsv);
+
+        float sd;
+        float mean = CalculateAirTempMean(month,year);
+        for(float speed : wsv)
+        {
+            sd += (speed - mean)*(speed - mean);
+        }
+
+        sd = sd / wsv.size();
+        sd = sqrt(sd);
+
+        if(sd == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return sd;
+        }
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning sd = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+void WindDataStore::GetAirTempVector(WindData& wd, vector<float>& atv)
+{
+    atv.push_back(wd.GetAirTemp());
+}
+
+int WindDataStore::CalculateSolarRadTotal(int month, int year)
+{
+    int sum;
+    string key = MONTH_STRING[month]+to_string(year);
+    if(m_bstMap.find(key) != m_bstMap.end())
+    {
+        wdBst tree = m_bstMap.at(key);
+        tree.InorderTraversal(GetSolarRadSum,sum);
+        return sum;
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+void WindDataStore::GetSolarRadSum(WindData& wd, int& sum)
+{
+    sum += wd.GetSolarRad();
+}
+
+float WindDataStore::GetsPCCWindSpeedMean(int month)
+{
+    itrMap it = m_bstMap.begin();
+    wdBst tree;
+    WindData wd;
+    Date d;
+    bool found = false;
+    float sum = 0;
+    int counter = 0;
+
+    while(it != m_bstMap.end()) //iterate through every map element
+    {
+        tree = it->second;
+        tree.GetRootElement(wd);
+        wd.GetDate(d);
+
+        if(d.GetMonth() == month) //find tree with matching month
+        {
+            found = true;
+            tree.InorderTraversal(GetWindSpeedSum,sum);
+            counter += tree.TreeNodeCount();
+        }
+        ++it;
+    }
+
+    if(found)
+    {
+        sum = sum / (float)counter;
+        return sum;
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+float WindDataStore::GetsPCCAirTempMean(int month)
+{
+    itrMap it = m_bstMap.begin();
+    wdBst tree;
+    WindData wd;
+    Date d;
+    bool found = false;
+    float sum = 0;
+    int counter = 0;
+
+    while(it != m_bstMap.end()) //iterate through every map element
+    {
+        tree = it->second;
+        tree.GetRootElement(wd);
+        wd.GetDate(d);
+
+        if(d.GetMonth() == month) //find tree with matching month
+        {
+            found = true;
+            tree.InorderTraversal(GetAirTempSum,sum);
+            counter += tree.TreeNodeCount();
+        }
+        ++it;
+    }
+
+    if(found)
+    {
+        sum = sum / (float)counter;
+        return sum;
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+float WindDataStore::GetsPCCSolarRadSum(int month)
+{
+    itrMap it = m_bstMap.begin();
+    wdBst tree;
+    WindData wd;
+    Date d;
+    bool found = false;
+    int sum = 0;
+    int counter = 0;
+
+    while(it != m_bstMap.end()) //iterate through every map element
+    {
+        tree = it->second;
+        tree.GetRootElement(wd);
+        wd.GetDate(d);
+
+        if(d.GetMonth() == month) //find tree with matching month
+        {
+            found = true;
+            tree.InorderTraversal(GetSolarRadSum,sum);
+            counter += tree.TreeNodeCount();
+        }
+        ++it;
+    }
+
+    if(found)
+    {
+        return sum;
+    }
+    else
+    {
+        cout << "Data does not exist." << endl;
+        cout << "Returning mean = -1 (Error)" << endl;
+        return -1;
+    }
+}
+
+float WindDataStore::CalculatesPCCS_T(int month)
+{
+    itrMap it = m_bstMap.begin();
+    wdBst tree;
+    WindData wd;
+    Date d;
+
+    //do windspeed first
+    vector<float> wsVector;
+    while(it != m_bstMap.end())
+    {
+        tree = it->second;
+        tree.GetRootElement(wd);
+        wd.GetDate(d);
+        if(d.GetMonth() == month)
+        {
+            tree.InorderTraversal(GetWindSpeedVector,wsVector);
+        }
+        ++it;
+    }
+
+    float wsSum;
+    float wsMean = GetsPCCWindSpeedMean(month);
+    for(float speed : wsVector)
+    {
+        wsSum += (speed - wsMean) * (speed - wsMean);
+    }
+
+    //do airtemp
+    it = m_bstMap.begin();
+    vector<float> atVector;
+    while(it != m_bstMap.end())
+    {
+        tree = it->second;
+        tree.GetRootElement(wd);
+        wd.GetDate(d);
+        if(d.GetMonth() == month)
+        {
+            tree.InorderTraversal(GetAirTempVector,atVector);
+        }
+        ++it;
+    }
+
+    float atSum;
+    float atMean = GetsPCCAirTempMean(month);
+    for(float speed : atVector)
+    {
+        atSum += (speed - atMean) * (speed - atMean);
+    }
+
+    //find numerator
+    float numerator = 0;
+
+
+    return atSum;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

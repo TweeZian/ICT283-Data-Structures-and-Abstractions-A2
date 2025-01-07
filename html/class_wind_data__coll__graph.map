@@ -1,0 +1,5 @@
+<map id="WindData" name="WindData">
+<area shape="rect" id="node1" title=" " alt="" coords="61,365,177,677"/>
+<area shape="rect" id="node2" href="$class_time.html" title=" " alt="" coords="5,93,96,215"/>
+<area shape="rect" id="node3" href="$class_date.html" title=" " alt="" coords="120,5,253,303"/>
+</map>

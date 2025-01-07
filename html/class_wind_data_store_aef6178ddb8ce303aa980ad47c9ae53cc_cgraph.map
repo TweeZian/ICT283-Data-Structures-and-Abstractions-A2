@@ -1,0 +1,10 @@
+<map id="WindDataStore::GetsPCCWindSpeedMean" name="WindDataStore::GetsPCCWindSpeedMean">
+<area shape="rect" id="node1" title=" " alt="" coords="5,125,208,166"/>
+<area shape="rect" id="node2" href="$class_wind_data.html#ab090758d7f76684bf460c7321057bf1e" title=" " alt="" coords="305,5,440,32"/>
+<area shape="rect" id="node3" href="$class_date.html#af2dcc6ce51dbb2bd798499a149bdffb7" title=" " alt="" coords="315,56,430,83"/>
+<area shape="rect" id="node4" href="$class_bst.html#a7900935b1a95778032453fad0b7bdf92" title=" " alt="" coords="299,107,446,133"/>
+<area shape="rect" id="node5" href="$class_wind_data_store.html#a2f7b7c96af2969bd9d2f0f5cc5846102" title=" " alt="" coords="256,157,489,184"/>
+<area shape="rect" id="node7" href="$class_bst.html#a07fc1c1d7d7219218c303296eaa7815e" title=" " alt="" coords="303,208,443,235"/>
+<area shape="rect" id="node8" href="$class_bst.html#a55500f5f946395333143062ffb973e54" title=" " alt="" coords="303,259,442,285"/>
+<area shape="rect" id="node6" href="$class_wind_data.html#acbca496e574e3d371a75f46bfda24b22" title=" " alt="" coords="537,157,683,184"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="WindDataStore::StoreIntoMap" name="WindDataStore::StoreIntoMap">
+<area shape="rect" id="node1" title=" " alt="" coords="5,81,200,108"/>
+<area shape="rect" id="node2" href="$class_wind_data.html#ab090758d7f76684bf460c7321057bf1e" title=" " alt="" coords="255,5,389,32"/>
+<area shape="rect" id="node3" href="$class_date.html#abf7862e2b51cf4fe7cd2c8d31ed03723" title=" " alt="" coords="248,56,396,83"/>
+<area shape="rect" id="node4" href="$class_date.html#ad79ce504482f317ddcfdc4ecad77671f" title=" " alt="" coords="269,107,375,133"/>
+<area shape="rect" id="node5" href="$class_bst.html#acfb766bb977c12758c35e323af274c0d" title=" " alt="" coords="281,157,363,184"/>
+</map>

@@ -1,0 +1,162 @@
+# depslib dependency file v1.0
+1690795527 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatastore.cpp
+	"WindDataStore.h"
+
+1690798554 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatastore.h
+	<map>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	<iterator>
+	<cmath>
+	"WindData.h"
+	"Bst.h"
+
+1690798680 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddata.h
+	"Date.h"
+	"Time.h"
+
+1690798681 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\date.h
+	<iostream>
+	<string>
+	<sstream>
+
+1687923030 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\time.h
+	<iostream>
+	<string>
+
+1690792249 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatastoretest.cpp
+	"WindDataStore.h"
+
+1690694124 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\date.cpp
+	"Date.h"
+
+1687668133 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\time.cpp
+	"Time.h"
+
+1690685688 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddata.cpp
+	"WindData.h"
+
+1690802625 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\bst.h
+	<iostream>
+	<vector>
+
+1690642679 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\bstwinddata.cpp
+	"BstWindData.h"
+
+1690646375 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\bstwinddata.h
+	"WindData.h"
+	"Bst.h"
+
+1687952403 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatetest.cpp
+	"WindData.h"
+	<iostream>
+
+1690733371 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\bsttest.cpp
+	<iostream>
+	"Bst.h"
+
+1690692615 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\datetest.cpp
+	"Date.h"
+
+1690806121 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\main.cpp
+	<iostream>
+	<fstream>
+	"WindDataStore.h"
+
+1690694124 source:c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\date.cpp
+	"Date.h"
+
+1690798681 c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\date.h
+	<iostream>
+	<string>
+	<sstream>
+
+1690800908 source:c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\main.cpp
+	<iostream>
+	<fstream>
+	"WindDataStore.h"
+
+1690798554 c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatastore.h
+	<map>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	<iterator>
+	<cmath>
+	"WindData.h"
+	"Bst.h"
+
+1690798680 c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddata.h
+	"Date.h"
+	"Time.h"
+
+1687923030 c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\time.h
+	<iostream>
+	<string>
+
+1690793777 c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\bst.h
+	<iostream>
+	<vector>
+
+1687668133 source:c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\time.cpp
+	"Time.h"
+
+1690685688 source:c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddata.cpp
+	"WindData.h"
+
+1690795527 source:c:\users\rexfe\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\winddatastore.cpp
+	"WindDataStore.h"
+
+1690801293 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\assignment2\draft.cpp
+	<iostream>
+	<fstream>
+	"WindDataStore.h"
+
+1690694124 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\date.cpp
+	"Date.h"
+
+1690798681 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\date.h
+	<iostream>
+	<string>
+	<sstream>
+
+1687668133 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\time.cpp
+	"Time.h"
+
+1687923030 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\time.h
+	<iostream>
+	<string>
+
+1690685688 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\winddata.cpp
+	"WindData.h"
+
+1690798680 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\winddata.h
+	"Date.h"
+	"Time.h"
+
+1691398622 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\winddatastore.cpp
+	"WindDataStore.h"
+
+1690798554 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\winddatastore.h
+	<map>
+	<string>
+	<vector>
+	<fstream>
+	<sstream>
+	<iterator>
+	<cmath>
+	"WindData.h"
+	"Bst.h"
+
+1691565320 d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\bst.h
+	<iostream>
+	<vector>
+
+1691564165 source:d:\dropbox\kaplan\lessons\ict283 data structures and abstractions\assignment 2\executable\main.cpp
+	<iostream>
+	<fstream>
+	"WindDataStore.h"
+
